@@ -1,12 +1,12 @@
 const db = require("../db");
 const bcrypt = require("bcrypt");
 
-function rootRequest(req, res){
-  res.render("homepage.ejs")
+function rootRequest(req, res) {
+  res.render("homepage.ejs");
 }
 
-function loginPage (req, res) {
-  if(req.isAuthenticated()) {
+function loginPage(req, res) {
+  if (req.isAuthenticated()) {
     if (req.user.role === "admin") {
       return res.redirect("/admin");
     } else {
@@ -15,11 +15,10 @@ function loginPage (req, res) {
   } else {
     res.render("login.ejs");
   }
-
 }
 
-function registerPage (req, res) {
-  if(req.isAuthenticated()) {
+function registerPage(req, res) {
+  if (req.isAuthenticated()) {
     if (req.user.role === "admin") {
       return res.redirect("/admin");
     } else {
@@ -28,22 +27,20 @@ function registerPage (req, res) {
   } else {
     res.render("register.ejs");
   }
-
 }
 
-async function register(req, res){
-  const {email, password} = req.body;
+async function register(req, res) {
+  const { email, password } = req.body;
   const hashPassword = await bcrypt.hash(password, 10);
   const user = await db.query(
     `INSERT INTO users (email, password, role) VALUES ('${email}', '${hashPassword}', 'student')`
-  )
-  if (user.rowCount === 1){
+  );
+  if (user.rowCount === 1) {
     res.redirect("/login");
   } else {
     res.redirect("/register");
   }
 }
-
 
 async function login(req, res) {
   const user = req.user;
@@ -54,10 +51,12 @@ async function login(req, res) {
   }
 }
 
-function adminPage(req, res) {
+async function adminPage(req, res) {
   if (req.isAuthenticated()) {
     if (req.user.role === "admin") {
-      res.render("admin.ejs");
+      const users = await db.query(`SELECT * FROM users WHERE role = 'student'`);
+      users = result.rows;
+      res.render("admin.ejs", { users });
     } else {
       res.render("limited_access.ejs");
     }
@@ -67,12 +66,11 @@ function adminPage(req, res) {
 }
 
 function studentPage(req, res) {
-  if (req.isAuthenticated()){
+  if (req.isAuthenticated()) {
     res.render("student.ejs");
-} else {
-  res.render("forbidden.ejs")
-}
-  ;
+  } else {
+    res.render("forbidden.ejs");
+  }
 }
 
 function logout(req, res) {
@@ -80,4 +78,13 @@ function logout(req, res) {
   res.redirect("/");
 }
 
-module.exports = { rootRequest, login, adminPage, studentPage, logout, loginPage, registerPage, register };
+module.exports = {
+  rootRequest,
+  login,
+  adminPage,
+  studentPage,
+  logout,
+  loginPage,
+  registerPage,
+  register,
+};
