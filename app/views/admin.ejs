@@ -5,6 +5,18 @@
 
 <body>
   <h1>Hallo Admin</h1>
+  <table>
+  <tr>
+    <th>email</th>
+    <th>delete</th>
+  </tr>
+  <% for (let i = 0; i < users.length; i++) { %>
+    <tr>
+      <td> <%= users[i].email %> </td>
+      <td><a href="/admin/delete/ <%= users[i].id %>"> delete </a> </td>
+    </tr>
+    <% } %>
+</table>
   <form action="/logout" method="post">
     <input type="submit" value="logout">
   </form>

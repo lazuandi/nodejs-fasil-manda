@@ -9,7 +9,7 @@ const bcrypt = require("bcrypt");
 const path = require("path");
 const port = 8000;
 
-const { rootRequest, login, adminPage, studentPage, logout, loginPage, register, registerPage } = require("./controllers");
+const { rootRequest, login, adminPage, studentPage, logout, loginPage, register, registerPage, deleteStudent } = require("./controllers");
 
 // Menangkap promise error pada express, jika tidak menggunakan ini
 // tiap error promise yang terjadi akan memberhentikan semua request
@@ -84,6 +84,7 @@ app.get("/register", (req,res) => registerPage(req, res));
 app.post("/register", (req,res) => register(req, res));
 
 app.get("/admin", (req, res) => adminPage(req, res));
+app.get("/admin/delete/:id", (req, res) => deleteStudent(req, res))
 app.get("/student", (req, res) => studentPage(req, res));
 app.post("/logout", (req, res) => logout(req,res));
 

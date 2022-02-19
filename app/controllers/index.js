@@ -54,7 +54,7 @@ async function login(req, res) {
 async function adminPage(req, res) {
   if (req.isAuthenticated()) {
     if (req.user.role === "admin") {
-      const users = await db.query(`SELECT * FROM users WHERE role = 'student'`);
+      const result = await db.query(`SELECT * FROM users WHERE role = 'student'`);
       users = result.rows;
       res.render("admin.ejs", { users });
     } else {
@@ -78,6 +78,12 @@ function logout(req, res) {
   res.redirect("/");
 }
 
+async function deleteStudent(req, res){
+  const id = req.params.id;
+  await db.query(` DELETE FROM users WHERE id = ${id}`);
+  res.redirect("/admin");
+}
+
 module.exports = {
   rootRequest,
   login,
@@ -87,4 +93,5 @@ module.exports = {
   loginPage,
   registerPage,
   register,
+  deleteStudent
 };
