@@ -4,10 +4,14 @@
 <%- include('./partials/head.ejs'); %>
 
 <body>
-  <h1>Welcome Visitor</h1>
-
-  <a href="/login"> Login </a>
-  <a href="/register"> Register </a>
+  <div class="container d-flex  flex-column justify-content-center align-items-center vh-100">
+  <h1 >Welcome Visitor</h1>
+<div class="d-flex gap-3" >
+  <a class="btn btn-danger" href="/login"> Login </a>
+  <a class="btn btn-primary" href="/register"> Register </a>
+</div>
+</div>
+  <%- include('./partials/footer.ejs'); %>
 </body>
 
 </html>

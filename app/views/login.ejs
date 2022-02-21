@@ -4,6 +4,9 @@
 <%- include('./partials/head.ejs'); %>
 
 <body>
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card"> 
+      <div class="card-body">
   <h1>Login</h1>
   <p>Silahkan login untuk memulai</p>
   <form method="post" action="/login" id="login-form">
@@ -11,6 +14,10 @@
     <input name="password" type="password" placeholder="password anda" />
     <button type="submit">submit</button>
   </form>
+</div>
+</div>
+  <%- include('./partials/footer.ejs'); %>
+</div>
 </body>
 
 </html>
