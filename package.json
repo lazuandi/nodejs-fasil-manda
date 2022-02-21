@@ -9,7 +9,7 @@
     "migrate": "node app/db_migration.js"
   },
   "keywords": [],
-  "author": "manda@omg.lol",
+  "author": "lazuandi",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
